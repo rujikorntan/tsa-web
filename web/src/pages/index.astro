@@ -1,0 +1,76 @@
+---
+import "../styles/global.css";
+import Landing from "../components/Landing";
+
+const siteUrl = "https://thaisurveyorclub.org";
+const title = "สมาคมเซอร์เวย์ประเทศไทย — Thai Surveyor Association";
+const description =
+  "สมาคมเซอร์เวย์ประเทศไทย องค์กรการค้าที่ไม่แสวงหาผลกำไร ก่อตั้ง พ.ศ. 2560 รวมบริษัทเซอร์เวย์กว่า 90 แห่งทั่ว 77 จังหวัด เพื่อยกระดับมาตรฐานวิชาชีพสำรวจภัยของประเทศไทย";
+---
+
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta
+      name="keywords"
+      content="สมาคมเซอร์เวย์ประเทศไทย, Thai Surveyor Association, เซอร์เวย์, สำรวจภัย, ประกันภัย, surveyor, loss adjuster"
+    />
+    <meta name="author" content="สมาคมเซอร์เวย์ประเทศไทย" />
+    <link rel="canonical" href={siteUrl} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="th_TH" />
+    <meta property="og:site_name" content="Thai Surveyor Association" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={siteUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <meta name="theme-color" content="#0e1b2e" />
+
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Anuphan:wght@200;300;400;500;600;700;800&family=IBM+Plex+Sans+Thai:wght@300;400;500;600&display=swap"
+    />
+
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        name: "สมาคมเซอร์เวย์ประเทศไทย",
+        alternateName: "Thai Surveyor Association",
+        url: siteUrl,
+        email: "contact@thaisurveyorclub.org",
+        telephone: "+66 2480 9972",
+        foundingDate: "2017-09-21",
+        address: {
+          "@type": "PostalAddress",
+          streetAddress:
+            "เลขที่ 200/13 หมู่ที่ 5 ซอย หมู่บ้านเอกธานี ถนนเลี่ยงเมือง",
+          addressLocality: "ตำบลมะขามเตี้ย อำเภอเมือง",
+          addressRegion: "จังหวัดสุราษฎร์ธานี",
+          addressCountry: "TH",
+        },
+        description,
+      })}
+    />
+  </head>
+  <body class="min-h-screen bg-parchment text-ink antialiased">
+    <Landing client:load />
+  </body>
+</html>

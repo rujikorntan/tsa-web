@@ -1,0 +1,77 @@
+---
+import "../../styles/global.css";
+import ArticlePost from "../../components/ArticlePost";
+import { getArticleBySlug, type Article } from "../../lib/cms";
+
+const { slug } = Astro.params;
+if (!slug) return Astro.redirect('/404');
+
+const article = await getArticleBySlug(slug);
+if (!article) return Astro.redirect('/404');
+
+const siteUrl = "https://thaisurveyorclub.org";
+const pageUrl = `${siteUrl}/articles/${article.slug}`;
+const title = `${article.title} — สมาคมเซอร์เวย์ประเทศไทย`;
+const description =
+  article.excerpt ??
+  "บทความจากสมาคมเซอร์เวย์ประเทศไทย องค์กรการค้าวิชาชีพสำรวจภัยของไทย";
+const ogImage = article.cover?.url;
+---
+
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={pageUrl} />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:locale" content="th_TH" />
+    <meta property="og:site_name" content="Thai Surveyor Association" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={pageUrl} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {ogImage && <meta name="twitter:image" content={ogImage} />}
+
+    <meta name="theme-color" content="#0e1b2e" />
+
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Anuphan:wght@200;300;400;500;600;700;800&family=IBM+Plex+Sans+Thai:wght@300;400;500;600&display=swap"
+    />
+
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: article.title,
+        description,
+        datePublished: article.publishedAt,
+        url: pageUrl,
+        image: ogImage,
+        publisher: {
+          "@type": "Organization",
+          name: "สมาคมเซอร์เวย์ประเทศไทย",
+        },
+      })}
+    />
+  </head>
+  <body class="min-h-screen bg-parchment text-ink antialiased">
+    <ArticlePost article={article} client:load />
+  </body>
+</html>

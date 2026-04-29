@@ -1,0 +1,16 @@
+node_modules
+.tmp
+.cache
+.strapi
+build
+dist
+.git
+.gitignore
+.env
+.env.*
+!.env.example
+.DS_Store
+*.log
+README.md
+Dockerfile
+.dockerignore

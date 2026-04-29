@@ -1,0 +1,167 @@
+@import "tailwindcss";
+
+@theme {
+  /* Keeping CSS-var names for backward compat across components,
+     but values are tuned to a modern, clean palette
+     (off-white base, sharper navy, brighter accents). */
+  --color-parchment: #f7f7f4;
+  --color-parchment-deep: #ececea;
+  --color-ink: #0b1422;
+  --color-ink-soft: #1c2740;
+  --color-gold: #e0a93a;
+  --color-gold-soft: #f1c468;
+  --color-crimson: #1e40af;
+
+  --font-serif-thai: "Anuphan", system-ui, sans-serif;
+  --font-sans-thai: "Anuphan", system-ui, sans-serif;
+  --font-mono: "IBM Plex Sans Thai", system-ui, sans-serif;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    background: var(--color-parchment);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    font-family: var(--font-sans-thai);
+    background: var(--color-parchment);
+  }
+
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-parchment);
+  }
+}
+
+@layer utilities {
+  .font-serif-thai {
+    font-family: var(--font-serif-thai);
+    font-feature-settings: "ss01" on, "kern" on;
+  }
+  .font-sans-thai {
+    font-family: var(--font-sans-thai);
+  }
+  .font-mono-tsa {
+    font-family: var(--font-mono);
+    font-feature-settings: "tnum" on;
+  }
+
+  /* Soft modern noise — much subtler than before, used only as an
+     atmospheric fade rather than a paper texture. */
+  .grain {
+    position: relative;
+  }
+  .grain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='5'/><feColorMatrix values='0 0 0 0 0.04  0 0 0 0 0.08  0 0 0 0 0.13  0 0 0 0.4 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.15'/></svg>");
+    opacity: 0.05;
+    z-index: 1;
+  }
+
+  .hairline {
+    background-image: linear-gradient(
+      to right,
+      transparent 0,
+      transparent 4px,
+      currentColor 4px,
+      currentColor 5px,
+      transparent 5px
+    );
+    background-size: 9px 1px;
+    background-repeat: repeat-x;
+    background-position: left center;
+  }
+
+  .ornament-divider::before,
+  .ornament-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.4;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 1100ms cubic-bezier(0.2, 0.7, 0.1, 1),
+      transform 1100ms cubic-bezier(0.2, 0.7, 0.1, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .reveal.is-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Variant: scale-from-center instead of slide-up. Apply to <Reveal className="reveal-center"> */
+  .reveal-center {
+    transform: scale(0.7);
+    transform-origin: center center;
+  }
+  .reveal-center.is-in {
+    transform: scale(1);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .vrule {
+    background-image: linear-gradient(
+      to bottom,
+      currentColor 0,
+      currentColor 6px,
+      transparent 6px,
+      transparent 12px
+    );
+    background-size: 1px 12px;
+    background-repeat: repeat-y;
+    width: 1px;
+  }
+}
+
+@keyframes drift {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-6px) translateX(2px); }
+}
+@keyframes slow-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes aurora-a {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  33%      { transform: translate3d(40px, -30px, 0); }
+  66%      { transform: translate3d(-30px, 25px, 0); }
+}
+@keyframes aurora-b {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%      { transform: translate3d(-50px, 20px, 0); }
+}
+@keyframes aurora-c {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%      { transform: translate3d(35px, 30px, 0); }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.animate-drift     { animation: drift 8s ease-in-out infinite; }
+.animate-slow-spin { animation: slow-spin 60s linear infinite; }
+.animate-aurora-a  { animation: aurora-a 22s ease-in-out infinite; }
+.animate-aurora-b  { animation: aurora-b 28s ease-in-out infinite; }
+.animate-aurora-c  { animation: aurora-c 34s ease-in-out infinite; }
+.animate-marquee   { animation: marquee 180s linear infinite; }

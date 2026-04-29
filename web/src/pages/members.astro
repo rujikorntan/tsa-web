@@ -1,0 +1,78 @@
+---
+import "../styles/global.css";
+import MembersPage from "../components/Members";
+import { members } from "../components/members-data";
+
+const siteUrl = "https://thaisurveyorclub.org";
+const pageUrl = `${siteUrl}/members`;
+const title = `ทำเนียบสมาชิก · ${members.length} บริษัท — สมาคมเซอร์เวย์ประเทศไทย`;
+const description = `รายชื่อบริษัทสมาชิกของสมาคมเซอร์เวย์ประเทศไทย จำนวน ${members.length} บริษัท ครอบคลุมพื้นที่ให้บริการสำรวจภัยทั่วทั้ง 77 จังหวัด ค้นหาบริษัทใกล้คุณตามจังหวัดและภูมิภาค`;
+---
+
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta
+      name="keywords"
+      content="ทำเนียบสมาชิก, รายชื่อบริษัทสำรวจภัย, สมาคมเซอร์เวย์ประเทศไทย, บริษัทเซอร์เวย์, สำรวจภัย, surveyor company, loss adjuster"
+    />
+    <link rel="canonical" href={pageUrl} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="th_TH" />
+    <meta property="og:site_name" content="Thai Surveyor Association" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={pageUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <meta name="theme-color" content="#0e1b2e" />
+
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="apple-touch-icon" href="/logo.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Anuphan:wght@200;300;400;500;600;700;800&family=IBM+Plex+Sans+Thai:wght@300;400;500;600&display=swap"
+    />
+
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        name: "รายชื่อสมาชิกสมาคมเซอร์เวย์ประเทศไทย",
+        url: pageUrl,
+        numberOfItems: members.length,
+        itemListElement: members.map((m, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          item: {
+            "@type": "Organization",
+            name: m.name,
+            telephone: m.phoneNumber,
+            taxID: m.taxId,
+            areaServed: m.province
+              .split(",")
+              .map((s) => s.trim())
+              .filter(Boolean),
+          },
+        })),
+      })}
+    />
+  </head>
+  <body class="min-h-screen bg-parchment text-ink antialiased">
+    <MembersPage client:load />
+  </body>
+</html>

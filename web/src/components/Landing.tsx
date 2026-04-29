@@ -5,14 +5,19 @@ import Pillars from "./sections/Pillars";
 import Heraldry from "./sections/Heraldry";
 import Stats from "./sections/Stats";
 import Members from "./sections/Members";
+import ArticlesPreview from "./sections/ArticlesPreview";
 import Contact from "./sections/Contact";
+import type { Article } from "../lib/cms";
 
-export default function Landing() {
+type Props = { articles?: Article[] };
+
+export default function Landing({ articles = [] }: Props) {
   return (
     <div className="relative">
       <Nav />
       <main>
         <Hero />
+        <ArticlesPreview articles={articles} />
         <Manifesto />
         <Pillars />
         <Heraldry />

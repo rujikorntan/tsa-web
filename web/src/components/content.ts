@@ -113,5 +113,6 @@ export const contact = {
 export const nav: { label: string; href: string }[] = [
   { label: "โครงสร้าง", href: "/structure" },
   { label: "สมาชิก", href: "/members" },
+  { label: "บทความ", href: "/articles" },
   { label: "ติดต่อ", href: "/#contact" },
 ];

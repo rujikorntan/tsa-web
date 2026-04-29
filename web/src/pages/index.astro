@@ -1,6 +1,9 @@
 ---
 import "../styles/global.css";
 import Landing from "../components/Landing";
+import { getArticles } from "../lib/cms";
+
+const articles = await getArticles();
 
 const siteUrl = "https://thaisurveyorclub.org";
 const title = "สมาคมเซอร์เวย์ประเทศไทย — Thai Surveyor Association";
@@ -71,6 +74,6 @@ const description =
     />
   </head>
   <body class="min-h-screen bg-parchment text-ink antialiased">
-    <Landing client:load />
+    <Landing articles={articles} client:load />
   </body>
 </html>
